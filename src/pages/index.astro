@@ -5,25 +5,62 @@ const { data: videos } = await supabase.from("videos").select("*");
 
 <html>
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>คลังวิดีโอของฉัน</title>
     <style>
-      body { font-family: sans-serif; padding: 20px; }
-      .video-card { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; border-radius: 8px; }
+      <style > body {
+        font-family: sans-serif;
+        padding: 40px;
+        background-color: #1a1a1a; /* สีพื้นหลังดำ-เทา */
+        color: #f0f0f0; /* สีตัวหนังสือขาว-เทาอ่อน */
+      }
+      h1 {
+        text-align: center;
+        color: #ffffff;
+      }
+      .video-card {
+        border: 1px solid #333; /* ขอบกล่องสีเทาเข้ม */
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 12px;
+        background-color: #2a2a2a; /* สีพื้นหลังกล่อง */
+        transition: transform 0.2s; /* เพิ่ม Animation เวลาเอาเมาส์ไปชี้ */
+      }
+      .video-card:hover {
+        transform: translateY(-5px); /* เวลาเมาส์ชี้ กล่องจะลอยขึ้นนิดนึง */
+        border-color: #00bcd4; /* และขอบจะเปลี่ยนเป็นสีฟ้า */
+      }
+      .video-card h2 {
+        margin-top: 0;
+        color: #ffffff;
+      }
+      a {
+        color: #00bcd4; /* ลิงก์สีฟ้าสด */
+        text-decoration: none; /* เอาขีดเส้นใต้ออก */
+        font-weight: bold;
+      }
+      a:hover {
+        text-decoration: underline; /* กลับมามีขีดเส้นใต้เวลาเมาส์ชี้ */
+      }
     </style>
   </head>
-  <body>
-    <h1>คลังวิดีโอของฉัน</h1>
-    
-    {videos && videos.length > 0 ? (
+</html>
+
+<body>
+  <h1>คลังวิดีโอของฉัน</h1>
+
+  {
+    videos && videos.length > 0 ? (
       videos.map((video) => (
         <div class="video-card">
           <h2>{video.title}</h2>
-          <a href={video.url} target="_blank">ดูวิดีโอคลิกที่นี่</a>
+          <a href={video.url} target="_blank">
+            ดูวิดีโอคลิกที่นี่
+          </a>
         </div>
       ))
     ) : (
       <p>ยังไม่มีวิดีโอในระบบ</p>
-    )}
-  </body>
-</html>
+    )
+  }
+</body>
