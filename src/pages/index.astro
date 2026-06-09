@@ -1,11 +1,29 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import { supabase } from "../lib/supabase";
+const { data: videos } = await supabase.from("videos").select("*");
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>คลังวิดีโอของฉัน</title>
+    <style>
+      body { font-family: sans-serif; padding: 20px; }
+      .video-card { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; border-radius: 8px; }
+    </style>
+  </head>
+  <body>
+    <h1>คลังวิดีโอของฉัน</h1>
+    
+    {videos && videos.length > 0 ? (
+      videos.map((video) => (
+        <div class="video-card">
+          <h2>{video.title}</h2>
+          <a href={video.url} target="_blank">ดูวิดีโอคลิกที่นี่</a>
+        </div>
+      ))
+    ) : (
+      <p>ยังไม่มีวิดีโอในระบบ</p>
+    )}
+  </body>
+</html>
